@@ -47,11 +47,11 @@ le_result_t ioutil_writeToFile (const char *path, void *value, size_t size, size
 
 // TODO verify this is working
 le_result_t gpio_exportPin (int pin) {
-  return ioutil_writeToFile ("/sys/class/gpio/export", &pin, sizeof(int), 1);
+  return ioutil_writeToFile("/sys/class/gpio/export", &pin, sizeof(int), 1);
 }
 
 le_result_t gpio_unexportPin (int pin) {
-  return ioutil_writeToFile ("/sys/class/gpio/unexport", &pin, sizeof(int), 1);
+  return ioutil_writeToFile("/sys/class/gpio/unexport", &pin, sizeof(int), 1);
 }
 
 void getGpioPath (char *outputStr, int pin, char *subDir) {
