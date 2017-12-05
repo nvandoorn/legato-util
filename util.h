@@ -29,6 +29,7 @@ le_result_t gpio_setLow (int pin);
 le_result_t gpio_setHigh (int pin);
 
 // time util
+// TODO give these a quasi "namespace"
 void delayMicro (unsigned long microsecs);
 void delayMilli (unsigned long millisecs);
 long getTimeMicrosecs ();
