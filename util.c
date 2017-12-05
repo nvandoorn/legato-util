@@ -2,29 +2,28 @@
 #include "util.h"
 
 le_result_t readFromFile (const char *path, void *value,
-  int (*scanCallback) (FILE *f, const char *formatter, void *val)) {
+  int (*scanCallback) (FILE *f, void *val)) {
   FILE *f = fopen(path, "r");
   if (f == NULL) {
     LE_WARN("Couldn't open '%s' - %m", path);
     return LE_IO_ERROR;
   }
-  int numScanned = scanCallback(f, "%lf", value);
+  int numScanned = scanCallback(f, value);
   if (numScanned != 1) return LE_FORMAT_ERROR;
   fclose(f);
   return LE_OK;
 }
 
-int scanIntCallback (FILE *f, const char *formatter, void *value) {
+int scanIntCallback (FILE *f, void *value) {
   int *val = value;
   return fscanf(f, "%d", val);
 }
 
-int scanDoubleCallback (FILE *f, const char *formatter, void *value) {
+int scanDoubleCallback (FILE *f, void *value) {
   double *val = value;
   return fscanf(f, "%lf", val);
 }
 
-// TODO camel case these methods
 le_result_t ioutil_readIntFromFile (const char *path, int *value) {
   return readFromFile(path, value, scanIntCallback);
 }
@@ -40,12 +39,13 @@ le_result_t ioutil_writeToFile (const char *path, void *value, size_t size, size
     LE_WARN("Failed to open %s for writing", path);
     return LE_IO_ERROR;
   }
-  size_t nWritten = fwrite(value, size, count, f);
+  ssize_t nWritten = fwrite(value, size, count, f);
   LE_INFO("Wrote %d bytes", nWritten);
   fclose(f);
   return LE_OK;
 }
 
+// TODO verify this is working
 le_result_t gpio_exportPin (int pin) {
   return ioutil_writeToFile ("/sys/class/gpio/export", &pin, sizeof(int), 1);
 }
@@ -91,9 +91,10 @@ le_result_t gpio_isActive (int pin, bool *isActive) {
   char path[50];
   getGpioPath(path, pin, "value");
   int val;
-  return ioutil_readIntFromFile(path, &val);
-  LE_FATAL_IF(val != 0 || val != 1, "value is not boolean");
-  *isActive = (bool)val;
+  le_result_t readRes = ioutil_readIntFromFile(path, &val);
+  LE_INFO("Raw value (from %s): %d", path, val);
+  *isActive = val;
+  return readRes;
 }
 
 le_result_t gpio_setValue (int pin, bool state) {

@@ -8,9 +8,9 @@
 
 // ioutil
 le_result_t readFromFile (const char *path, void *value,
-  int (*scanCallback) (FILE *f, const char *formatter, void *val));
-int scanIntCallback (FILE *f, const char *formatter, void *value);
-int scanDoubleCallback (FILE *f, const char *formatter, void *value);
+  int (*scanCallback) (FILE *f, void *val));
+int scanIntCallback (FILE *f, void *value);
+int scanDoubleCallback (FILE *f, void *value);
 le_result_t ioutil_readIntFromFile (const char *path, int *value);
 le_result_t ioutil_readDoubleFromFile (const char *filePath, double *value);
 le_result_t ioutil_writeToFile (const char *path, void *value, size_t size, size_t count);
