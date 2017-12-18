@@ -111,6 +111,15 @@ le_result_t gpio_setHigh (int pin) {
   return gpio_setValue(pin, HIGH);
 }
 
+le_result_t util_flattenRes (le_result_t *res, int nRes) {
+  for (int i = 0; i < nRes; i++) {
+    le_result_t *resPtr = res + i;
+    if (*resPtr != LE_OK) return *resPtr;
+  }
+  return LE_OK;
+}
+
+// Functions below are deprecated
 void delayMicro (unsigned long microsecs) {
   unsigned long retTime = getTimeMicrosecs() + microsecs;
   while (getTimeMicrosecs() < retTime);

@@ -34,4 +34,6 @@ void delayMicro (unsigned long microsecs);
 void delayMilli (unsigned long millisecs);
 long getTimeMicrosecs ();
 
+le_result_t util_flattenRes (le_result_t *res, int nRes);
+
 #endif
