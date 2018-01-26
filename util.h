@@ -33,7 +33,9 @@ le_result_t gpio_setHigh (int pin);
 void delayMicro (unsigned long microsecs);
 void delayMilli (unsigned long millisecs);
 long getTimeMicrosecs ();
+uint64_t GetCurrentTimestamp (void);
 
+int util_getUnixDatetime ();
 le_result_t util_flattenRes (le_result_t *res, int nRes);
 
 #endif

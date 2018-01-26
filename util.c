@@ -119,6 +119,25 @@ le_result_t util_flattenRes (le_result_t *res, int nRes) {
   return LE_OK;
 }
 
+int util_getUnixDatetime () {
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  return tv.tv_sec;
+}
+
+/**
+ * Convenience function to get current time as uint64_t.
+ *
+ * @return
+ *      Current time as a uint64_t
+ */
+uint64_t GetCurrentTimestamp(void) {
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  uint64_t utcMilliSec = (uint64_t)(tv.tv_sec) * 1000 + (uint64_t)(tv.tv_usec) / 1000;
+  return utcMilliSec;
+}
+
 // Functions below are deprecated
 void delayMicro (unsigned long microsecs) {
   unsigned long retTime = getTimeMicrosecs() + microsecs;
