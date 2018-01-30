@@ -35,6 +35,7 @@ void delayMilli (unsigned long millisecs);
 long getTimeMicrosecs ();
 uint64_t GetCurrentTimestamp (void);
 
+time_t util_getMTime (char *path);
 int util_getUnixDatetime ();
 le_result_t util_flattenRes (le_result_t *res, int nRes);
 

@@ -126,6 +126,16 @@ int util_getUnixDatetime () {
 }
 
 /**
+ * Get the last modified datetime
+ * of the file at path
+ */
+time_t util_getMTime (char *path) {
+  struct stat st;
+  if (stat(path, &st) != 0) return -1;
+  else return st.st_mtime;
+}
+
+/**
  * Convenience function to get current time as uint64_t.
  *
  * @return
