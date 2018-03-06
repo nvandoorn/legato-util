@@ -16,35 +16,16 @@ int scanDoubleCallback (FILE *f, void *value);
 le_result_t ioutil_readIntFromFile (const char *path, int *value);
 le_result_t ioutil_readDoubleFromFile (const char *filePath, double *value);
 le_result_t ioutil_writeToFile (const char *path, void *value, size_t size, size_t count);
-
 ```
 
-### GPIO
-
-Functions to manipulate sysfs GPIO.
-
+### Time
 ```C
-void getGpioPath (char *outputStr, int pin, char *subDir);
-le_result_t gpio_exportPin (int pin);
-le_result_t gpio_unexportPin (int pin);
-le_result_t gpio_setDirection (int pin, char *direction);
-le_result_t gpio_setInput (int pin);
-le_result_t gpio_setOutput (int pin);
-le_result_t gpio_setActiveState (int pin, bool isActiveLow);
-le_result_t gpio_isActive (int pin, bool *isActive);
-le_result_t gpio_setValue (int pin, bool state);
-le_result_t gpio_setLow (int pin);
-le_result_t gpio_setHigh (int pin);
-
+int util_getUnixDatetime ();
+time_t util_getMTime (char *path);
+uint64_t GetCurrentTimestamp (void);
 ```
 
-### Timing
-
-Functions to help with sample timing. Could potentially be replaced with system calls
-
+### Other
 ```C
-// TODO give these a quasi "namespace"
-void delayMicro (unsigned long microsecs);
-void delayMilli (unsigned long millisecs);
-long getTimeMicrosecs ();
+le_result_t util_flattenRes (le_result_t *res, int nRes);
 ```
